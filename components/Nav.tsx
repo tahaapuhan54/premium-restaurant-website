@@ -34,12 +34,23 @@ export default function Nav() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'border-b border-gold/10 bg-char-950/80 backdrop-blur-md py-4'
-          : 'border-b border-transparent bg-transparent py-6'
+        scrolled ? 'py-4' : 'py-6'
       }`}
     >
-      <nav className="mx-auto flex max-w-container items-center justify-between px-6 sm:px-10">
+      {/* Scrolled-state bar background. The blur deliberately lives on this
+          layer rather than on <header> itself: an element with a non-none
+          backdrop-filter becomes the containing block for its fixed-position
+          descendants, which would re-anchor the mobile drawer below to this
+          ~76px bar instead of the viewport — leaving its centred links
+          overflowing off the top of the screen once the page is scrolled. */}
+      <div
+        aria-hidden
+        className={`absolute inset-0 border-b border-gold/10 bg-char-950/80 backdrop-blur-md transition-opacity duration-500 ${
+          scrolled ? 'opacity-100' : 'opacity-0'
+        }`}
+      />
+
+      <nav className="relative mx-auto flex max-w-container items-center justify-between px-6 sm:px-10">
         {/* Wordmark */}
         {/* The accessible name leads with the visible wordmark, so voice control
             ("click KÖZ & Kömür") matches what is actually on screen. */}
@@ -116,9 +127,13 @@ export default function Nav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: EASE }}
-            className="fixed inset-0 z-40 bg-char-950/97 backdrop-blur-lg lg:hidden"
+            className="fixed inset-0 z-40 overflow-y-auto overscroll-contain bg-char-950/97 backdrop-blur-lg lg:hidden"
           >
-            <ul className="flex h-full flex-col items-center justify-center gap-8">
+            {/* min-h-full rather than h-full so the links stay centred when they
+                fit and the panel simply scrolls when they do not — short
+                landscape phones would otherwise clip the list at both ends.
+                The vertical padding keeps the first link clear of the bar. */}
+            <ul className="flex min-h-full flex-col items-center justify-center gap-8 px-6 py-24">
               {LINKS.map((l, i) => (
                 <motion.li
                   key={l.href}

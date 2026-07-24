@@ -8,7 +8,7 @@ import { lineGrow, viewportOnce } from '@/lib/motion';
 
 // A single wide halo drifting behind the cursor. Overdamped (ratio > 1), so it
 // glides into place and never wobbles — that is what reads as smooth.
-const HALO_SPRING = { stiffness: 45, damping: 26, mass: 0.8 };
+const HALO_SPRING = { stiffness: 120, damping: 22, mass: 0.6 };
 const FADE_SPRING = { stiffness: 30, damping: 22 };
 
 export default function Story() {
