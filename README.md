@@ -15,8 +15,8 @@ Premium bir steakhouse için sinematik, tek sayfalık (single-page) tanıtım si
 ## Kurulum
 
 ```bash
-git clone https://github.com/<kullanici-adi>/koz-istanbul-chophouse.git
-cd koz-istanbul-chophouse
+git clone https://github.com/tahaapuhan54/premium-restaurant-website.git
+cd premium-restaurant-website
 npm install
 npm run dev
 ```
